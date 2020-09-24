@@ -525,5 +525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bd4d1b3ad9b58020a63bdd26b43f6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mePortal: {fileID: 1250503822133237551}
   otherPortal: {fileID: 0}
+  screen: {fileID: 1250503822236121070}
+  portalOffset: {x: 0, y: 0, z: 0}
+  mePortal: {fileID: 1250503822133237550}

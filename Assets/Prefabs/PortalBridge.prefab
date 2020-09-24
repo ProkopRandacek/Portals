@@ -43,7 +43,7 @@ PrefabInstance:
         type: 3}
       propertyPath: otherPortal
       value: 
-      objectReference: {fileID: 2882429180755203145}
+      objectReference: {fileID: 4257487100084440839}
     - target: {fileID: 1250503822133237550, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
       propertyPath: m_Name
@@ -104,6 +104,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1250503822236121067, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_Name
+      value: Screen2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2766979910018196543, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_Name
+      value: Portal2Camera
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7bca7b4721e0f79fa2ce0bf0470f70c, type: 3}
 --- !u!4 &4132858087197576615 stripped
@@ -112,6 +122,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2882429180434586248}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3048672430357092073 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 166489688703503457, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2882429180434586248}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bd4d1b3ad9b58020a63bdd26b43f6d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4132858087921369958
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -123,7 +145,7 @@ PrefabInstance:
         type: 3}
       propertyPath: otherPortal
       value: 
-      objectReference: {fileID: 4132858087197576615}
+      objectReference: {fileID: 3048672430357092073}
     - target: {fileID: 1250503822133237550, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
       propertyPath: m_Name
@@ -184,6 +206,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1250503822236121067, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_Name
+      value: Screen1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2766979910018196543, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_Name
+      value: Portal1Camera
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7bca7b4721e0f79fa2ce0bf0470f70c, type: 3}
 --- !u!4 &2882429180755203145 stripped
@@ -192,3 +224,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4132858087921369958}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4257487100084440839 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 166489688703503457, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+    type: 3}
+  m_PrefabInstance: {fileID: 4132858087921369958}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bd4d1b3ad9b58020a63bdd26b43f6d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
