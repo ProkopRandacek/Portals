@@ -19,7 +19,7 @@ public class MouseCamLook : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        character = this.transform.parent.gameObject;
+        character = transform.parent.gameObject;
     }
 	
     // Update is called once per frame
