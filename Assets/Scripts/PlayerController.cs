@@ -3,7 +3,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public  float               gravity = 18;
-    public  float               speed   = 10.0f;
     private float               _verticalVelocity;
     private Vector3             _velocity;
     private Vector3             _smoothV;

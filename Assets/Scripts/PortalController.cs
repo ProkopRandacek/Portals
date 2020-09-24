@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class PortalCameraController : MonoBehaviour
+public class PortalController : MonoBehaviour
 {
-    public PortalCameraController otherPortal;
+    public PortalController otherPortal;
     public MeshRenderer           screen;
     public Vector3                portalOffset;
     public GameObject             mePortal;

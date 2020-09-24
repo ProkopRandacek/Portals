@@ -2,16 +2,16 @@
 
 public class MainCameraController : MonoBehaviour
 {
-    private PortalCameraController[] _portals;
+    private PortalController[] _portals;
     void Awake()
     {
-        _portals = FindObjectsOfType<PortalCameraController>();
+        _portals = FindObjectsOfType<PortalController>();
     }
 
     // Update is called once per frame
     void OnPreCull()
     {
-        foreach (PortalCameraController portal in _portals)
+        foreach (PortalController portal in _portals)
         {
             portal.Render();
         }
