@@ -19,6 +19,17 @@ public class PortalController : MonoBehaviour
     private List<PortalTraveller> _trackedTravellers;
 
     private static readonly int MainTex = Shader.PropertyToID("_MainTex");
+    
+    public void Render()
+    {
+        screen.enabled = false;
+        CreateViewTexture();
+        Move(); //FIXME
+        SetNearClipPlane();
+        _myCam.Render();
+        screen.enabled = true;
+        ProtectScreenFromClipping(_playerPos.position);
+    }
 
     void Awake()
     {
@@ -31,8 +42,33 @@ public class PortalController : MonoBehaviour
         _myCam.enabled     = false;
         //portalOffset = transform.position - _otherPortalPos.transform.position; // Vector pointing from the other portal to me
     }
+    
+    void LateUpdate()
+    {
+        for (int i = 0; i < _trackedTravellers.Count; i++)
+        {
+            PortalTraveller traveller = _trackedTravellers[i];
+            Transform travellerT = traveller.transform;
+            Matrix4x4 m = otherPortal.transform.localToWorldMatrix * transform.worldToLocalMatrix * travellerT.localToWorldMatrix;
 
-    private void CreateViewTexture()
+            Vector3 offsetFromPortal = travellerT.position - transform.position;
+            int portalSide = Math.Sign(Vector3.Dot(offsetFromPortal, transform.forward));
+            int portalSideOld = Math.Sign(Vector3.Dot(traveller.prevOffsetFromPortal, transform.forward));
+            // Teleport the traveller if it has crossed from one side of the portal to the other
+            if (portalSide != portalSideOld)
+            {
+                traveller.Teleport(transform, otherPortal.transform, m.GetColumn (3), m.rotation);
+                // Can't rely on OnTriggerEnter/Exit to be called next frame since it depends on when FixedUpdate runs
+                otherPortal.OnTravellerEnterPortal(traveller);
+                _trackedTravellers.RemoveAt(i);
+                i--;
+            }
+            else
+                traveller.prevOffsetFromPortal = offsetFromPortal;
+        }
+    }
+
+    void CreateViewTexture()
     {
         if (_viewTexture == null || _viewTexture.width != Screen.width || _viewTexture.height != Screen.height)
         {
@@ -44,23 +80,13 @@ public class PortalController : MonoBehaviour
         }
     }
     
-    // Camera position and rotation calculation
-    private void Move()
+    void Move() // Camera position and rotation calculation
     {
         _myCamPos.position = transform.position + (_playerPos.position - _otherPortalPos.position);
         _myCamPos.rotation = _playerPos.rotation; //TODO this might not be right when multiple portals are behind with different rotations?
     }
-    
-    public void Render()
-    {
-        screen.enabled = false;
-        CreateViewTexture();
-        Move(); //FIXME
-        _myCam.Render();
-        screen.enabled = true;
-        ProtectScreenFromClipping(_playerPos.position);
-    }
 
+    #region Events
     void OnTravellerEnterPortal(PortalTraveller traveller)
     {
         if (!_trackedTravellers.Contains(traveller))
@@ -87,32 +113,9 @@ public class PortalController : MonoBehaviour
             _trackedTravellers.Remove(traveller);
         }
     }
-
-    private void LateUpdate()
-    {
-        for (int i = 0; i < _trackedTravellers.Count; i++)
-        {
-            PortalTraveller traveller = _trackedTravellers[i];
-            Transform travellerT = traveller.transform;
-            Matrix4x4 m = otherPortal.transform.localToWorldMatrix * transform.worldToLocalMatrix * travellerT.localToWorldMatrix;
-
-            Vector3 offsetFromPortal = travellerT.position - transform.position;
-            int portalSide = Math.Sign(Vector3.Dot(offsetFromPortal, transform.forward));
-            int portalSideOld = Math.Sign(Vector3.Dot(traveller.prevOffsetFromPortal, transform.forward));
-            // Teleport the traveller if it has crossed from one side of the portal to the other
-            if (portalSide != portalSideOld)
-            {
-                traveller.Teleport(transform, otherPortal.transform, m.GetColumn (3), m.rotation);
-                // Can't rely on OnTriggerEnter/Exit to be called next frame since it depends on when FixedUpdate runs
-                otherPortal.OnTravellerEnterPortal(traveller);
-                _trackedTravellers.RemoveAt(i);
-                i--;
-            }
-            else
-                traveller.prevOffsetFromPortal = offsetFromPortal;
-        }
-    }
+    #endregion
     
+    #region Some camera magic
     // Sets the thickness of the portal screen so as not to clip with camera near plane when player goes through
     void ProtectScreenFromClipping(Vector3 viewPoint)
     {
@@ -127,11 +130,21 @@ public class PortalController : MonoBehaviour
         screenT.localPosition = Vector3.forward * screenThickness * (camFacingSameDirAsPortal ? 0.5f : -0.5f);
     }
     
-    int SideOfPortal (Vector3 pos) {
-        return Math.Sign (Vector3.Dot (pos - transform.position, transform.forward));
+    // Calculate and set the clip plane to align with the portal screen
+    void SetNearClipPlane()
+    {
+        Transform clipPlane = transform;
+        int dot = Math.Sign(Vector3.Dot (clipPlane.forward, transform.position - _myCam.transform.position));
+        Vector3 camSpacePos    = _myCam.worldToCameraMatrix.MultiplyPoint(clipPlane.position);
+        Vector3 camSpaceNormal = _myCam.worldToCameraMatrix.MultiplyVector(clipPlane.forward) * dot;
+        float   camSpaceDst    = -Vector3.Dot(camSpacePos, camSpaceNormal) + 0.05f;
+        if (Mathf.Abs(camSpaceDst) > 0.2f)
+        {
+            Vector4 clipPlaneCameraSpace = new Vector4(camSpaceNormal.x, camSpaceNormal.y, camSpaceNormal.z, camSpaceDst);
+            _myCam.projectionMatrix = _myCam.CalculateObliqueMatrix (clipPlaneCameraSpace);
+        }
+        else
+            _myCam.projectionMatrix = _myCam.projectionMatrix;
     }
-
-    bool SameSideOfPortal (Vector3 posA, Vector3 posB) {
-        return SideOfPortal (posA) == SideOfPortal (posB);
-    }
+    #endregion
 }
