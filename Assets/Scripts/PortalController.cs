@@ -95,24 +95,22 @@ public class PortalController : MonoBehaviour
         {
             PortalTraveller traveller = _trackedTravellers[i];
             Transform travellerT = traveller.transform;
-            var m = otherPortal.transform.localToWorldMatrix * transform.worldToLocalMatrix * travellerT.localToWorldMatrix;
+            Matrix4x4 m = otherPortal.transform.localToWorldMatrix * transform.worldToLocalMatrix * travellerT.localToWorldMatrix;
 
             Vector3 offsetFromPortal = travellerT.position - transform.position;
-            int portalSide = Math.Sign (Vector3.Dot (offsetFromPortal, transform.forward));
-            int portalSideOld = Math.Sign (Vector3.Dot (traveller.prevOffsetFromPortal, transform.forward));
+            int portalSide = Math.Sign(Vector3.Dot(offsetFromPortal, transform.forward));
+            int portalSideOld = Math.Sign(Vector3.Dot(traveller.prevOffsetFromPortal, transform.forward));
             // Teleport the traveller if it has crossed from one side of the portal to the other
-            if (portalSide != portalSideOld) {
-                var positionOld = travellerT.position;
-                var rotOld      = travellerT.rotation;
-                traveller.Teleport (transform, otherPortal.transform, m.GetColumn (3), m.rotation);
+            if (portalSide != portalSideOld)
+            {
+                traveller.Teleport(transform, otherPortal.transform, m.GetColumn (3), m.rotation);
                 // Can't rely on OnTriggerEnter/Exit to be called next frame since it depends on when FixedUpdate runs
-                otherPortal.OnTravellerEnterPortal (traveller);
-                _trackedTravellers.RemoveAt (i);
+                otherPortal.OnTravellerEnterPortal(traveller);
+                _trackedTravellers.RemoveAt(i);
                 i--;
-
-            } else {
-                traveller.prevOffsetFromPortal = offsetFromPortal;
             }
+            else
+                traveller.prevOffsetFromPortal = offsetFromPortal;
         }
     }
 }
