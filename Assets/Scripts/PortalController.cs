@@ -58,11 +58,11 @@ public class PortalController : MonoBehaviour
         Move(); //FIXME
         _myCam.Render();
         screen.enabled = true;
+        ProtectScreenFromClipping(_playerPos.position);
     }
 
     void OnTravellerEnterPortal(PortalTraveller traveller)
     {
-        Debug.Log("OnTravellerEnter");
         if (!_trackedTravellers.Contains(traveller))
         {
             traveller.EnterPortalTreshold();
@@ -80,7 +80,6 @@ public class PortalController : MonoBehaviour
     
     void OnTriggerExit(Collider other)
     {
-        Debug.Log("OnTriggerExit");
         PortalTraveller traveller = other.GetComponent<PortalTraveller>();
         if (traveller && _trackedTravellers.Contains(traveller))
         {
@@ -112,5 +111,27 @@ public class PortalController : MonoBehaviour
             else
                 traveller.prevOffsetFromPortal = offsetFromPortal;
         }
+    }
+    
+    // Sets the thickness of the portal screen so as not to clip with camera near plane when player goes through
+    void ProtectScreenFromClipping(Vector3 viewPoint)
+    {
+        float halfHeight = Camera.main.nearClipPlane * Mathf.Tan (Camera.main.fieldOfView * 0.5f * Mathf.Deg2Rad);
+        float halfWidth = halfHeight * Camera.main.aspect;
+        float dstToNearClipPlaneCorner = new Vector3 (halfWidth, halfHeight, Camera.main.nearClipPlane).magnitude;
+        float screenThickness = dstToNearClipPlaneCorner;
+
+        Transform screenT                  = screen.transform;
+        bool      camFacingSameDirAsPortal = Vector3.Dot(transform.forward, transform.position - viewPoint) > 0;
+        screenT.localScale    = new Vector3(screenT.localScale.x, screenT.localScale.y, screenThickness);
+        screenT.localPosition = Vector3.forward * screenThickness * (camFacingSameDirAsPortal ? 0.5f : -0.5f);
+    }
+    
+    int SideOfPortal (Vector3 pos) {
+        return Math.Sign (Vector3.Dot (pos - transform.position, transform.forward));
+    }
+
+    bool SameSideOfPortal (Vector3 posA, Vector3 posB) {
+        return SideOfPortal (posA) == SideOfPortal (posB);
     }
 }

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerController : PortalTraveller
 {
-    public  float               gravity = 18;
     private float               _verticalVelocity;
     private Vector3             _velocity;
     private Vector3             _smoothV;
@@ -28,7 +27,7 @@ public class PlayerController : PortalTraveller
         Vector3 targetVelocity = worldInputDir * currentSpeed;
         _velocity = Vector3.SmoothDamp(_velocity, targetVelocity, ref _smoothV, 0.3f);
 
-        _verticalVelocity -= gravity * Time.deltaTime;
+        _verticalVelocity -= 2 * Time.deltaTime;
         _velocity         =  new Vector3(_velocity.x, _verticalVelocity, _velocity.z);
 
         var flags = _controller.Move(_velocity * Time.deltaTime);
@@ -44,7 +43,6 @@ public class PlayerController : PortalTraveller
     
     public override void Teleport (Transform fromPortal, Transform toPortal, Vector3 pos, Quaternion rot)
     {
-        Debug.Log("Teleport");
         transform.position = pos;
         _velocity          = toPortal.TransformVector(fromPortal.InverseTransformVector(_velocity));
         Physics.SyncTransforms();
