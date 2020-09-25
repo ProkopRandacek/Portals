@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : PortalTraveller
 {
     public  float               gravity = 18;
     private float               _verticalVelocity;
@@ -40,5 +40,13 @@ public class PlayerController : MonoBehaviour
             // turn on the cursor
             Cursor.lockState = CursorLockMode.None;
         }
+    }
+    
+    public override void Teleport (Transform fromPortal, Transform toPortal, Vector3 pos, Quaternion rot)
+    {
+        Debug.Log("Teleport");
+        transform.position = pos;
+        _velocity          = toPortal.TransformVector(fromPortal.InverseTransformVector(_velocity));
+        Physics.SyncTransforms();
     }
 }

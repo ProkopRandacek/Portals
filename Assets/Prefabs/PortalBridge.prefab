@@ -43,7 +43,7 @@ PrefabInstance:
         type: 3}
       propertyPath: otherPortal
       value: 
-      objectReference: {fileID: 4257487100084440839}
+      objectReference: {fileID: 0}
     - target: {fileID: 1250503822133237550, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
       propertyPath: m_Name
@@ -114,6 +114,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Portal2Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 5804494312930321098, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: otherPortal
+      value: 
+      objectReference: {fileID: 7626679230995882412}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7bca7b4721e0f79fa2ce0bf0470f70c, type: 3}
 --- !u!4 &4132858087197576615 stripped
@@ -122,9 +127,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2882429180434586248}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3048672430357092073 stripped
+--- !u!114 &8686817799923480642 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 166489688703503457, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+  m_CorrespondingSourceObject: {fileID: 5804494312930321098, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
     type: 3}
   m_PrefabInstance: {fileID: 2882429180434586248}
   m_PrefabAsset: {fileID: 0}
@@ -145,7 +150,7 @@ PrefabInstance:
         type: 3}
       propertyPath: otherPortal
       value: 
-      objectReference: {fileID: 3048672430357092073}
+      objectReference: {fileID: 0}
     - target: {fileID: 1250503822133237550, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
       propertyPath: m_Name
@@ -216,6 +221,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Portal1Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 5804494312930321098, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: otherPortal
+      value: 
+      objectReference: {fileID: 8686817799923480642}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7bca7b4721e0f79fa2ce0bf0470f70c, type: 3}
 --- !u!4 &2882429180755203145 stripped
@@ -224,9 +234,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4132858087921369958}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4257487100084440839 stripped
+--- !u!114 &7626679230995882412 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 166489688703503457, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+  m_CorrespondingSourceObject: {fileID: 5804494312930321098, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
     type: 3}
   m_PrefabInstance: {fileID: 4132858087921369958}
   m_PrefabAsset: {fileID: 0}
