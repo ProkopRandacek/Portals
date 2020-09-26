@@ -187,7 +187,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   otherPortal: {fileID: 0}
   screen: {fileID: 1250503822236121070}
-  portalOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &1250503822236121067
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,7 +413,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0

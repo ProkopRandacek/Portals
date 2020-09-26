@@ -8,7 +8,6 @@ public class PortalController : MonoBehaviour
 {
     public PortalController otherPortal;
     public MeshRenderer     screen;
-    public Vector3          portalOffset;
 
     private Camera                _myCam;
     private Transform             _myCamPos;

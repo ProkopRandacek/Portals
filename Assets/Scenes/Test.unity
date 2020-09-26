@@ -237,6 +237,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PortalBridge
       objectReference: {fileID: 0}
+    - target: {fileID: 2882429180855134338, guid: 3d5287a72956c8f138a737c80b0af845,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2882429180855134339, guid: 3d5287a72956c8f138a737c80b0af845,
         type: 3}
       propertyPath: m_LocalPosition.x
