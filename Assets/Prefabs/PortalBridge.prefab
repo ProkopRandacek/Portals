@@ -47,7 +47,7 @@ PrefabInstance:
     - target: {fileID: 1250503822133237550, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
       propertyPath: m_Name
-      value: Portal 2
+      value: Portal
       objectReference: {fileID: 0}
     - target: {fileID: 1250503822133237551, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
@@ -107,12 +107,12 @@ PrefabInstance:
     - target: {fileID: 1250503822236121067, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
       propertyPath: m_Name
-      value: Screen2
+      value: Screen
       objectReference: {fileID: 0}
     - target: {fileID: 2766979910018196543, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
       propertyPath: m_Name
-      value: Portal2Camera
+      value: PortalCamera
       objectReference: {fileID: 0}
     - target: {fileID: 5804494312930321098, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
@@ -154,7 +154,7 @@ PrefabInstance:
     - target: {fileID: 1250503822133237550, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
       propertyPath: m_Name
-      value: Portal 1
+      value: Portal
       objectReference: {fileID: 0}
     - target: {fileID: 1250503822133237551, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
@@ -214,12 +214,12 @@ PrefabInstance:
     - target: {fileID: 1250503822236121067, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
       propertyPath: m_Name
-      value: Screen1
+      value: Screen
       objectReference: {fileID: 0}
     - target: {fileID: 2766979910018196543, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
       propertyPath: m_Name
-      value: Portal1Camera
+      value: PortalCamera
       objectReference: {fileID: 0}
     - target: {fileID: 5804494312930321098, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}

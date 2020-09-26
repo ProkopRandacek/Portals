@@ -4,13 +4,16 @@ using UnityEngine;
 using Matrix4x4 = UnityEngine.Matrix4x4;
 using Vector3 = UnityEngine.Vector3;
 
-public class PortalController : MonoBehaviour
+public class Portal : MonoBehaviour
 {
-    public PortalController otherPortal;
-    public MeshRenderer     screen;
+    public Portal       otherPortal;
+    public MeshRenderer screen;
+    public GameObject[] points = new GameObject[2];
+    public Transform    myCamPos;
+    public Camera       myCam;
+    public Bounds       Bounds;
+    public Vector3      offset;
 
-    private Camera                _myCam;
-    private Transform             _myCamPos;
     private Transform             _playerPos;
     private Transform             _otherPortalPos;
     private GameObject            _otherPortalScreen;
@@ -19,21 +22,21 @@ public class PortalController : MonoBehaviour
 
     private static readonly int MainTex = Shader.PropertyToID("_MainTex");
     
-    public void Render()
+    public void Render(Vector3 offset)
     {
         otherPortal.screen.enabled = false;
         CreateViewTexture();
-        Move(); //FIXME
+        Move(offset); //FIXME
         SetNearClipPlane();
         ProtectScreenFromClipping(_playerPos.position);
-        _myCam.Render();
+        myCam.Render();
         otherPortal.screen.enabled = true;
     }
 
     public void RenderColor(Color clr)
     {
-        _myCamPos.position = transform.position;
-        _myCamPos.rotation = transform.rotation;
+        myCamPos.position = transform.position;
+        myCamPos.rotation = transform.rotation;
         Texture2D tex = new Texture2D(1, 1);
         tex.SetPixel(0, 0, clr);
         tex.Apply();
@@ -44,12 +47,16 @@ public class PortalController : MonoBehaviour
     {
         // ReSharper disable once PossibleNullReferenceException
         _playerPos         = Camera.main.GetComponent<Transform>();
-        _myCam             = GetComponentInChildren<Camera>();
-        _myCamPos          = _myCam.transform;
+        myCam              = GetComponentInChildren<Camera>();
+        myCamPos           = myCam.transform;
         _otherPortalPos    = otherPortal.transform;
         _trackedTravellers = new List<PortalTraveller>();
-        _myCam.enabled     = false;
+        myCam.enabled      = false;
+        Bounds             = screen.bounds;
+        offset             = transform.position - otherPortal.transform.position;
         //portalOffset = transform.position - _otherPortalPos.transform.position; // Vector pointing from the other portal to me
+
+        //_myCam.nearClipPlane
     }
     
     void LateUpdate()
@@ -84,7 +91,7 @@ public class PortalController : MonoBehaviour
             if (_viewTexture != null)
                 _viewTexture.Release();
             _viewTexture = new RenderTexture(Screen.width, Screen.height, 0);
-            _myCam.targetTexture = _viewTexture;
+            myCam.targetTexture = _viewTexture;
             screen.material.SetTexture(MainTex, _viewTexture);
         }
 
@@ -92,10 +99,11 @@ public class PortalController : MonoBehaviour
             screen.material.SetTexture(MainTex, _viewTexture);
     }
     
-    void Move() // Camera position and rotation calculation
+    void Move(Vector3 offset) // Camera position and rotation calculation
     {
-        _myCamPos.position = _otherPortalPos.position + (_playerPos.position - transform.position);
-        _myCamPos.rotation = _playerPos.rotation;
+        myCamPos.position =  _otherPortalPos.position + (_playerPos.position - transform.position);
+        myCamPos.position -= offset;
+        myCamPos.rotation =  _playerPos.rotation;
     }
 
     #region Events
@@ -146,17 +154,17 @@ public class PortalController : MonoBehaviour
     void SetNearClipPlane()
     {
         Transform clipPlane = otherPortal.transform;
-        int dot = Math.Sign(Vector3.Dot(clipPlane.forward, otherPortal.transform.position - _myCam.transform.position));
-        Vector3 camSpacePos    = _myCam.worldToCameraMatrix.MultiplyPoint(clipPlane.position);
-        Vector3 camSpaceNormal = _myCam.worldToCameraMatrix.MultiplyVector(clipPlane.forward) * dot;
-        float   camSpaceDst    = -Vector3.Dot(camSpacePos, camSpaceNormal) + 0.05f;
-        if (Mathf.Abs(camSpaceDst) > 0.2f)
+        int dot = Math.Sign(Vector3.Dot(clipPlane.forward, otherPortal.transform.position - myCam.transform.position));
+        Vector3 camSpacePos    = myCam.worldToCameraMatrix.MultiplyPoint(clipPlane.position);
+        Vector3 camSpaceNormal = myCam.worldToCameraMatrix.MultiplyVector(clipPlane.forward) * dot;
+        float   camSpaceDst    = -Vector3.Dot(camSpacePos, camSpaceNormal) + 0.00f;
+        if (Mathf.Abs(camSpaceDst) > 0.00f)
         {
             Vector4 clipPlaneCameraSpace = new Vector4(camSpaceNormal.x, camSpaceNormal.y, camSpaceNormal.z, camSpaceDst);
-            _myCam.projectionMatrix = _myCam.CalculateObliqueMatrix(clipPlaneCameraSpace);
+            myCam.projectionMatrix = myCam.CalculateObliqueMatrix(clipPlaneCameraSpace);
         }
         else
-            _myCam.projectionMatrix = _myCam.projectionMatrix;
+            myCam.projectionMatrix = myCam.projectionMatrix;
     }
     #endregion
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1523203393617226122}
   - component: {fileID: 1523203393617226124}
   - component: {fileID: 1523203393617226123}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.01
-  far clip plane: 1000
+  far clip plane: 4.5
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -88,6 +88,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dec8e39129780a33a3979d110e83d8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxDistance: 10
+  debugRay: 1
+  duration: 0.05
+  res: 10
+  renderDistance: 3
 --- !u!114 &1523203393617226123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,7 +123,7 @@ GameObject:
   - component: {fileID: 1523203394535310360}
   - component: {fileID: 4406075745185456395}
   - component: {fileID: 7666083279835843206}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
