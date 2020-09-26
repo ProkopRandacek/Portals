@@ -2,9 +2,10 @@
 
 public class MainCameraController : MonoBehaviour
 {
-    public float maxDistance = 10.0f;
-    public bool  debugRay    = true;
-    public float duration    = 0.0f;
+    public float maxDistance    = 10.0f;
+    public bool  debugRay       = true;
+    public float duration       = 0.0f;
+    public float renderDistance = 3.0f;
     
     private PortalController[] _portals;
     private Vector3            _pos;
@@ -18,19 +19,24 @@ public class MainCameraController : MonoBehaviour
     void OnPreCull()
     {
         foreach (PortalController portal in _portals)
-        {
-            RaycastHit hit = RayCast(transform.position, portal.transform.position);
-            
-            Debug.Log(transform.position + "  " +  portal.transform.position);
-            Debug.Log(hit);
+            if (IsVisible(portal))
+            {
+                //Debug.Log("Render");
+                portal.Render();
+            }
+            else
+            {
+                //Debug.Log("Dont Render");
+                portal.RenderColor(Color.red);
+            }
+}
 
-            portal.Render();
-        }
-    }
-
-    void isVisible(PortalController portal)
+    bool IsVisible(PortalController portal)
     {
-        RaycastHit hit = RayCast(transform.position, portal.transform.position);
+        if (Vector3.Distance(transform.position, portal.transform.position) < renderDistance)
+            return true;
+        return false;
+        //RaycastHit hit = RayCast(transform.position, portal.transform.position);
     }
 
     RaycastHit RayCast(Vector3 from, Vector3 to)

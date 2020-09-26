@@ -21,13 +21,23 @@ public class PortalController : MonoBehaviour
     
     public void Render()
     {
-        screen.enabled = false;
+        otherPortal.screen.enabled = false;
         CreateViewTexture();
         Move(); //FIXME
         SetNearClipPlane();
-        _myCam.Render();
-        screen.enabled = true;
         ProtectScreenFromClipping(_playerPos.position);
+        _myCam.Render();
+        otherPortal.screen.enabled = true;
+    }
+
+    public void RenderColor(Color clr)
+    {
+        _myCamPos.position = transform.position;
+        _myCamPos.rotation = transform.rotation;
+        Texture2D tex = new Texture2D(1, 1);
+        tex.SetPixel(0, 0, clr);
+        tex.Apply();
+        screen.material.SetTexture(MainTex, tex);
     }
 
     void Awake()
@@ -75,14 +85,17 @@ public class PortalController : MonoBehaviour
                 _viewTexture.Release();
             _viewTexture = new RenderTexture(Screen.width, Screen.height, 0);
             _myCam.targetTexture = _viewTexture;
-            otherPortal.screen.material.SetTexture(MainTex, _viewTexture);
+            screen.material.SetTexture(MainTex, _viewTexture);
         }
+
+        if (screen.material.mainTexture.width == 1) // The debug 1x1 one color texture is set from previous frame
+            screen.material.SetTexture(MainTex, _viewTexture);
     }
     
     void Move() // Camera position and rotation calculation
     {
-        _myCamPos.position = transform.position + (_playerPos.position - _otherPortalPos.position);
-        _myCamPos.rotation = _playerPos.rotation; //TODO this might not be right when multiple portals are behind with different rotations?
+        _myCamPos.position = _otherPortalPos.position + (_playerPos.position - transform.position);
+        _myCamPos.rotation = _playerPos.rotation;
     }
 
     #region Events
@@ -132,15 +145,15 @@ public class PortalController : MonoBehaviour
     // Calculate and set the clip plane to align with the portal screen
     void SetNearClipPlane()
     {
-        Transform clipPlane = transform;
-        int dot = Math.Sign(Vector3.Dot (clipPlane.forward, transform.position - _myCam.transform.position));
+        Transform clipPlane = otherPortal.transform;
+        int dot = Math.Sign(Vector3.Dot(clipPlane.forward, otherPortal.transform.position - _myCam.transform.position));
         Vector3 camSpacePos    = _myCam.worldToCameraMatrix.MultiplyPoint(clipPlane.position);
         Vector3 camSpaceNormal = _myCam.worldToCameraMatrix.MultiplyVector(clipPlane.forward) * dot;
         float   camSpaceDst    = -Vector3.Dot(camSpacePos, camSpaceNormal) + 0.05f;
         if (Mathf.Abs(camSpaceDst) > 0.2f)
         {
             Vector4 clipPlaneCameraSpace = new Vector4(camSpaceNormal.x, camSpaceNormal.y, camSpaceNormal.z, camSpaceDst);
-            _myCam.projectionMatrix = _myCam.CalculateObliqueMatrix (clipPlaneCameraSpace);
+            _myCam.projectionMatrix = _myCam.CalculateObliqueMatrix(clipPlaneCameraSpace);
         }
         else
             _myCam.projectionMatrix = _myCam.projectionMatrix;

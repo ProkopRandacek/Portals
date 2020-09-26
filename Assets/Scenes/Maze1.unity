@@ -349,7 +349,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 785545474}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 0, z: 2.5}
+  m_LocalPosition: {x: -0.5, y: 0, z: 5.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1592626407}
@@ -463,7 +463,7 @@ Light:
   m_GameObject: {fileID: 885573411}
   m_Enabled: 1
   serializedVersion: 10
-  m_Type: 2
+  m_Type: 3
   m_Shape: 0
   m_Color: {r: 0.15129942, g: 0.9433962, b: 0.24053283, a: 1}
   m_Intensity: 1
@@ -764,7 +764,7 @@ PrefabInstance:
     - target: {fileID: 4132858087197576615, guid: 3d5287a72956c8f138a737c80b0af845,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.5
+      value: 4.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d5287a72956c8f138a737c80b0af845, type: 3}
@@ -938,7 +938,7 @@ PrefabInstance:
     - target: {fileID: 4132858087197576615, guid: 3d5287a72956c8f138a737c80b0af845,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.5
+      value: 4.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d5287a72956c8f138a737c80b0af845, type: 3}
@@ -1486,7 +1486,7 @@ PrefabInstance:
     - target: {fileID: 4132858087197576615, guid: 3d5287a72956c8f138a737c80b0af845,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.5
+      value: 4.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d5287a72956c8f138a737c80b0af845, type: 3}
@@ -1689,7 +1689,7 @@ Light:
   m_GameObject: {fileID: 1592626402}
   m_Enabled: 1
   serializedVersion: 10
-  m_Type: 2
+  m_Type: 3
   m_Shape: 0
   m_Color: {r: 0.22272164, g: 0.31588566, b: 0.8584906, a: 1}
   m_Intensity: 1
@@ -1737,7 +1737,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 1.7748036e+28, y: 0, z: 2.628673e+20, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -2225,7 +2225,7 @@ PrefabInstance:
     - target: {fileID: 4132858087197576615, guid: 3d5287a72956c8f138a737c80b0af845,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.5
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 4132858087197576615, guid: 3d5287a72956c8f138a737c80b0af845,
         type: 3}
