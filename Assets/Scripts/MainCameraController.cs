@@ -3,24 +3,24 @@ using UnityEngine;
 
 public class MainCameraController : MonoBehaviour
 {
-    public bool  debugRay       = true;
-    public float duration       = 0.1f;
+    public bool debugRay = false;
+    public float duration = 0.1f;
     public int res = 10;
     public float renderDistance = 3.0f; //should be +- length of the maze's diagonal; maze pieces should be at least this far away from each other
-    
+
     private Portal[]     _portals;
     private List<Portal> _directlyVisiblePortals;
 
-    private Vector3 da;
+    /*private Vector3 da;
     private Vector3 db;
-    private Vector3 dc;
+    private Vector3 dc;*/
     
     void Awake()
     {
         _portals = FindObjectsOfType<Portal>();
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawSphere(da, 0.4f);
@@ -28,10 +28,19 @@ public class MainCameraController : MonoBehaviour
         Gizmos.DrawSphere(db, 0.4f);
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(dc, 0.4f);
-    }
+    }*/
 
     void OnPreCull()
     {
+        // 1. Find directly visible portals (raycast from player camera to near portals)
+        // 2. For every directly visible portal
+        //    1. Get the planes that align with the portal's frame (TODO rn just using cameras planes)
+        //    2. Use that to get portals that are possibly trough from this portal
+        //    3. Calculate position of the camera relative to the portal and apply this position to the portal.otherPortal
+        //       1. For every possibly visible portal cast rays from that portal to the calculated position and see if it hit the portal.otherPortal
+        //          If yes, the raycasting portal is definitely visible.
+
+
         // Look for directly visible portals
         _directlyVisiblePortals = new List<Portal>();
         foreach (Portal portal in _portals)
@@ -54,7 +63,7 @@ public class MainCameraController : MonoBehaviour
             Portal  raycastingPortal = portal.otherPortal; // The portal that is gonna cast rays
             Vector3 raycastOrigin    = portal.otherPortal.transform.position + (transform.position - portal.transform.position); // The point that the rays were cast from the point of view of the raycasting portal;
             //Debug.Log("origin " + raycastOrigin);
-            da = raycastOrigin;
+            //da = raycastOrigin;
 
             Plane[] planes = GeometryUtility.CalculateFrustumPlanes(portal.myCam); // The camera planes
             
@@ -67,7 +76,7 @@ public class MainCameraController : MonoBehaviour
                     if (Vector3.Distance(raycastOrigin, p.transform.position) < renderDistance) // And if they are not too far away
                     {
                         possiblePortals.Add(p);
-                        p.RenderColor(Color.black);
+                        p.RenderColor(Color.magenta);
                     }
             }
 
@@ -84,17 +93,20 @@ public class MainCameraController : MonoBehaviour
 
                 foreach (Vector3 point in points)
                 {
-                    db = point;
-                    // Cast rays from points to the direction of raycarsOrigin and see if they hit the portal
-                    Physics.Raycast(point, raycastOrigin - point, out RaycastHit hit2, renderDistance);
-                    dc = (raycastOrigin - point);
+                    //db = point;
+                    // Cast rays from points to the direction of raycastOrigin and see if they hit the portal
+                    Vector3 direction = raycastOrigin - point;
+                    // Move the point a tiny bit in the direction to prevent from colliding with the raycasting portal's screen
+                    Vector3 p = point + (direction / direction.magnitude) / 10;
+                    Physics.Raycast(p, direction, out RaycastHit hit2, renderDistance);
+                    //dc = (raycastOrigin - point);
                     if (hit2.collider.gameObject == raycastingPortal.screen.gameObject)
                     {
-                        if (debugRay) Debug.DrawRay(point, raycastOrigin - point, Color.yellow, duration);
+                        if (debugRay) Debug.DrawLine(p, hit2.point, Color.yellow, duration);
                         portals2.Add((possiblePortal, portal.offset));
                         break;
                     }
-                    if (debugRay) Debug.DrawRay(point, raycastOrigin - point, Color.magenta, duration);
+                    if (debugRay) Debug.DrawLine(p, hit2.point, Color.magenta, duration);
                 }
             }
         }
@@ -130,20 +142,12 @@ public class MainCameraController : MonoBehaviour
                     if (debugRay) Debug.DrawLine(transform.position, hit.point, Color.green, duration);
                     return true;
                 }
+                //Debug.Log(hit.collider.gameObject.name);
 
                 if (debugRay) Debug.DrawLine(transform.position, hit.point, Color.red, duration);
             }
         }
 
         return false;
-    }
-
-    List<Portal> GetNearPortals(Vector3 position, float dist)
-    {
-        List<Portal> near = new List<Portal>();
-        foreach (Portal portal in _portals)
-            if (Vector3.Distance(position, portal.transform.position) < dist)
-                near.Add(portal);
-        return near;
     }
 }

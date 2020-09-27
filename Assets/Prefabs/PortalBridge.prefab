@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2882429180855134339
 Transform:
@@ -44,10 +44,30 @@ PrefabInstance:
       propertyPath: otherPortal
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1161359789100349971, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1250503821063476641, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1250503822073432289, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 1250503822133237550, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
       propertyPath: m_Name
       value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 1250503822133237550, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 1250503822133237551, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
@@ -63,26 +83,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1250503822133237551, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1250503822133237551, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1250503822133237551, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1250503822133237551, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1250503822133237551, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
@@ -109,16 +109,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: Screen
       objectReference: {fileID: 0}
+    - target: {fileID: 1250503822236121067, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1250503822329835209, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 2766979910018196543, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
       propertyPath: m_Name
       value: PortalCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 2766979910018196543, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614118156377219308, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 5804494312930321098, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
       propertyPath: otherPortal
       value: 
       objectReference: {fileID: 7626679230995882412}
+    - target: {fileID: 8843744599626469130, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7bca7b4721e0f79fa2ce0bf0470f70c, type: 3}
 --- !u!4 &4132858087197576615 stripped
@@ -151,10 +176,30 @@ PrefabInstance:
       propertyPath: otherPortal
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1161359789100349971, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1250503821063476641, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1250503822073432289, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 1250503822133237550, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
       propertyPath: m_Name
       value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 1250503822133237550, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 1250503822133237551, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
@@ -170,26 +215,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1250503822133237551, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1250503822133237551, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1250503822133237551, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1250503822133237551, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1250503822133237551, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
@@ -216,16 +241,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: Screen
       objectReference: {fileID: 0}
+    - target: {fileID: 1250503822236121067, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1250503822329835209, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 2766979910018196543, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
       propertyPath: m_Name
       value: PortalCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 2766979910018196543, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614118156377219308, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 5804494312930321098, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
         type: 3}
       propertyPath: otherPortal
       value: 
       objectReference: {fileID: 8686817799923480642}
+    - target: {fileID: 8843744599626469130, guid: f7bca7b4721e0f79fa2ce0bf0470f70c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7bca7b4721e0f79fa2ce0bf0470f70c, type: 3}
 --- !u!4 &2882429180755203145 stripped

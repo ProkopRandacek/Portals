@@ -26,7 +26,7 @@ public class Portal : MonoBehaviour
     {
         otherPortal.screen.enabled = false;
         CreateViewTexture();
-        Move(offset); //FIXME
+        Move(offset);
         SetNearClipPlane();
         ProtectScreenFromClipping(_playerPos.position);
         myCam.Render();
@@ -35,12 +35,12 @@ public class Portal : MonoBehaviour
 
     public void RenderColor(Color clr)
     {
-        myCamPos.position = transform.position;
+        /*myCamPos.position = transform.position;
         myCamPos.rotation = transform.rotation;
         Texture2D tex = new Texture2D(1, 1);
         tex.SetPixel(0, 0, clr);
         tex.Apply();
-        screen.material.SetTexture(MainTex, tex);
+        screen.material.SetTexture(MainTex, tex);*/
     }
 
     void Awake()
@@ -53,7 +53,7 @@ public class Portal : MonoBehaviour
         _trackedTravellers = new List<PortalTraveller>();
         myCam.enabled      = false;
         Bounds             = screen.bounds;
-        offset             = transform.position - otherPortal.transform.position;
+        offset             = transform.position - _otherPortalPos.position;
         //portalOffset = transform.position - _otherPortalPos.transform.position; // Vector pointing from the other portal to me
 
         //_myCam.nearClipPlane
@@ -95,8 +95,8 @@ public class Portal : MonoBehaviour
             screen.material.SetTexture(MainTex, _viewTexture);
         }
 
-        if (screen.material.mainTexture.width == 1) // The debug 1x1 one color texture is set from previous frame
-            screen.material.SetTexture(MainTex, _viewTexture);
+        //if (screen.material.mainTexture.width == 1) // The debug 1x1 one color texture is set from previous frame
+        //    screen.material.SetTexture(MainTex, _viewTexture);
     }
     
     void Move(Vector3 offset) // Camera position and rotation calculation

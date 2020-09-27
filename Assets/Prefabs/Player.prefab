@@ -88,10 +88,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dec8e39129780a33a3979d110e83d8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 10
-  debugRay: 1
+  debugRay: 0
   duration: 0.05
-  res: 10
+  res: 20
   renderDistance: 3
 --- !u!114 &1523203393617226123
 MonoBehaviour:
@@ -168,6 +167,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -192,6 +192,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &1523203394535310375
 CapsuleCollider:
   m_ObjectHideFlags: 0
