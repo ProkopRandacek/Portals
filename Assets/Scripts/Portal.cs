@@ -13,6 +13,7 @@ public class Portal : MonoBehaviour
     public Camera       myCam;
     public Bounds       Bounds;
     public Vector3      offset;
+    public Vector3[]    corners;
 
     private Transform             _playerPos;
     private Transform             _otherPortalPos;

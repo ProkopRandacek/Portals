@@ -34,7 +34,7 @@ public class MainCameraController : MonoBehaviour
     {
         // 1. Find directly visible portals (raycast from player camera to near portals)
         // 2. For every directly visible portal
-        //    1. Get the planes that align with the portal's frame (TODO rn just using cameras planes)
+        //    1. Get the planes that align with the portal's frame
         //    2. Use that to get portals that are possibly trough from this portal
         //    3. Calculate position of the camera relative to the portal and apply this position to the portal.otherPortal
         //       1. For every possibly visible portal cast rays from that portal to the calculated position and see if it hit the portal.otherPortal
@@ -65,7 +65,7 @@ public class MainCameraController : MonoBehaviour
             //Debug.Log("origin " + raycastOrigin);
             //da = raycastOrigin;
 
-            Plane[] planes = GeometryUtility.CalculateFrustumPlanes(portal.myCam); // The camera planes
+            Plane[] planes = GetPlanes(portal.myCam, portal);
             
             List<Portal> possiblePortals = new List<Portal>();
 
@@ -111,10 +111,10 @@ public class MainCameraController : MonoBehaviour
             }
         }
 
-        foreach ((Portal portal, Vector3 offset) in portals2)
+        foreach ((Portal portal, Vector3 offset) in portals2) // First, render the 1 level deep portals
             portal.Render(offset);
         
-        foreach (Portal portal in _directlyVisiblePortals)
+        foreach (Portal portal in _directlyVisiblePortals)  // Last, render the directly visible portals
             portal.Render(Vector3.zero);
     }
 
@@ -149,5 +149,26 @@ public class MainCameraController : MonoBehaviour
         }
 
         return false;
+    }
+
+    Plane[] GetPlanes(Camera cam, Portal portal)
+    {
+        Plane[] camPlanes = GeometryUtility.CalculateFrustumPlanes(cam);
+        Vector3 camPos    = cam.transform.position;
+        
+        Plane[] planes      = new Plane[6];
+        Vector3 topLeft     = portal.corners[0];
+        Vector3 topRight    = portal.corners[1];
+        Vector3 bottomRight = portal.corners[2];
+        Vector3 bottomLeft  = portal.corners[3];
+        
+        planes[0] = new Plane(camPos, topLeft,    bottomLeft);  // Left
+        planes[1] = new Plane(camPos, topRight,   bottomRight); // Right
+        planes[2] = new Plane(camPos, bottomLeft, bottomRight); // Bottom
+        planes[3] = new Plane(camPos, topLeft,    topRight);    // Top
+        planes[4] = camPlanes[4];                               // Near
+        planes[5] = camPlanes[5];                               // Far
+
+        return planes;
     }
 }
