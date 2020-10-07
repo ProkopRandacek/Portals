@@ -408,6 +408,11 @@ PrefabInstance:
       propertyPath: far clip plane
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 1523203393617226124, guid: 8aefb6d882caae3deb66311ee73576f1,
+        type: 3}
+      propertyPath: debugRay
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1523203394535310372, guid: 8aefb6d882caae3deb66311ee73576f1,
         type: 3}
       propertyPath: m_LocalPosition.x
