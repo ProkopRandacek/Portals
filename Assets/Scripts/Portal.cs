@@ -6,42 +6,44 @@ using Vector3 = UnityEngine.Vector3;
 
 public class Portal : MonoBehaviour
 {
-    public Portal       otherPortal;
-    public MeshRenderer screen;
-    public GameObject[] points = new GameObject[2];
-    public Transform    myCamPos;
-    public Camera       myCam;
-    public Bounds       Bounds;
-    public Vector3      offset;
-    public Vector3[]    corners;
-
+    public Portal       otherPortal; // Link to the other portal that is connected to this portal
+    public MeshRenderer screen; // This portal's screen Mesh Renderer. The rendered texture is applied here
+    public GameObject[] points = new GameObject[2]; // Two points and n generated points between them are used as raycasting targets to test if this portal is visible
+    public Transform    myCamPos; // This portal's camera position. This camera is rendering what is supposed to be put on this portal screen (So its near the otherPortal)
+    public Camera       myCam; // This portal's camera
+    public Bounds       Bounds; // This portal's Bounds. Used to test if the portal is in cameras view frustum
+    public Vector3      offset; // Vector pointing from this portal to the otherPortal. Not used rn
+    public Vector3[]    corners; // The 4 corners of this portal's screen. Used to calculate planes that align with camera and these corners
+                                 // to get view frustum and test whether a portal is visible from a camera trough this portal (See MainCameraController.cs' GetPlanes() method)
+                                 
+    // Self explanatory variables IMO
     private Transform             _playerPos;
     private Transform             _otherPortalPos;
-    private GameObject            _otherPortalScreen;
+    private GameObject            _otherPortalScreen; 
     private RenderTexture         _viewTexture;
-    private List<PortalTraveller> _trackedTravellers;
+    private List<PortalTraveller> _trackedTravellers; // Travellers that are near any portal
 
     private static readonly int MainTex = Shader.PropertyToID("_MainTex");
     
     public void Render(Vector3 offset)
     {
-        otherPortal.screen.enabled = false;
-        CreateViewTexture();
-        Move(offset);
-        SetNearClipPlane();
-        ProtectScreenFromClipping(_playerPos.position);
-        myCam.Render();
-        otherPortal.screen.enabled = true;
+        otherPortal.screen.enabled = false; // Disable the other portals screen because we need to see trough and render whats behind
+        CreateViewTexture(); // Reset the texture or something
+        Move(offset); // Move the camera to correct position with all the offset when rendering portal visible trough another portal and all that stuff
+        SetNearClipPlane(); // Clip plane magic. Avoids rendering something between the portal's camera and otherPortals's screen
+        ProtectScreenFromClipping(_playerPos.position); // Idk
+        myCam.Render(); // Render what camera sees
+        otherPortal.screen.enabled = true; // Enable the screen again
     }
 
-    public void RenderColor(Color clr)
+    public void RenderColor(Color clr) // Same thing as Render() but makes the portal's screen a solid color. Used to debug
     {
-        /*myCamPos.position = transform.position;
+        myCamPos.position = transform.position;
         myCamPos.rotation = transform.rotation;
         Texture2D tex = new Texture2D(1, 1);
         tex.SetPixel(0, 0, clr);
         tex.Apply();
-        screen.material.SetTexture(MainTex, tex);*/
+        screen.material.SetTexture(MainTex, tex);
     }
 
     void Awake()
@@ -96,8 +98,8 @@ public class Portal : MonoBehaviour
             screen.material.SetTexture(MainTex, _viewTexture);
         }
 
-        //if (screen.material.mainTexture.width == 1) // The debug 1x1 one color texture is set from previous frame
-        //    screen.material.SetTexture(MainTex, _viewTexture);
+        if (screen.material.mainTexture.width == 1) // The debug 1x1 one color texture is set from previous frame
+            screen.material.SetTexture(MainTex, _viewTexture);
     }
     
     void Move(Vector3 offset) // Camera position and rotation calculation
@@ -114,7 +116,7 @@ public class Portal : MonoBehaviour
         {
             traveller.EnterPortalTreshold();
             traveller.prevOffsetFromPortal = traveller.transform.position - transform.position;
-            _trackedTravellers.Add (traveller);
+            _trackedTravellers.Add(traveller);
         }
     }
     

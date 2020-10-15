@@ -3,32 +3,18 @@ using UnityEngine;
 
 public class MainCameraController : MonoBehaviour
 {
-    public bool debugRay = false;
+    public bool debugRay;
     public float duration = 0.1f;
     public int res = 10;
     public float renderDistance = 3.0f; //should be +- length of the maze's diagonal; maze pieces should be at least this far away from each other
 
     private Portal[]     _portals;
     private List<Portal> _directlyVisiblePortals;
-
-    /*private Vector3 da;
-    private Vector3 db;
-    private Vector3 dc;*/
     
     void Awake()
     {
         _portals = FindObjectsOfType<Portal>();
     }
-
-    /*private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawSphere(da, 0.4f);
-        Gizmos.color = Color.black;
-        Gizmos.DrawSphere(db, 0.4f);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(dc, 0.4f);
-    }*/
 
     void OnPreCull()
     {
@@ -62,8 +48,6 @@ public class MainCameraController : MonoBehaviour
 
             Portal  raycastingPortal = portal.otherPortal; // The portal that is gonna cast rays
             Vector3 raycastOrigin    = portal.otherPortal.transform.position + (transform.position - portal.transform.position); // The point that the rays were cast from the point of view of the raycasting portal;
-            //Debug.Log("origin " + raycastOrigin);
-            //da = raycastOrigin;
 
             Plane[] planes = GetPlanes(portal.myCam, portal);
             
@@ -74,12 +58,12 @@ public class MainCameraController : MonoBehaviour
                 if (p.gameObject == raycastingPortal.gameObject) continue;
                 if (GeometryUtility.TestPlanesAABB(planes, p.Bounds)) // Test if portal is within the camera vision planes
                     if (Vector3.Distance(raycastOrigin, p.transform.position) < renderDistance) // And if they are not too far away
-                    {
-                        possiblePortals.Add(p);
-                        p.RenderColor(Color.magenta);
-                    }
+                        if (!_directlyVisiblePortals.Contains(p)) // The portal isn't directly visible
+                        {
+                            possiblePortals.Add(p);
+                            p.RenderColor(Color.magenta);
+                        }
             }
-
 
             foreach (Portal possiblePortal in possiblePortals)
             {
@@ -93,13 +77,11 @@ public class MainCameraController : MonoBehaviour
 
                 foreach (Vector3 point in points)
                 {
-                    //db = point;
                     // Cast rays from points to the direction of raycastOrigin and see if they hit the portal
                     Vector3 direction = raycastOrigin - point;
                     // Move the point a tiny bit in the direction to prevent from colliding with the raycasting portal's screen
                     Vector3 p = point + (direction / direction.magnitude) / 10;
                     Physics.Raycast(p, direction, out RaycastHit hit2, renderDistance);
-                    //dc = (raycastOrigin - point);
                     if (hit2.collider.gameObject == raycastingPortal.screen.gameObject)
                     {
                         if (debugRay) Debug.DrawLine(p, hit2.point, Color.yellow, duration);
@@ -123,11 +105,16 @@ public class MainCameraController : MonoBehaviour
         Vector3   a      = portal.points[0].transform.position;
         Vector3   b      = portal.points[1].transform.position;
         Vector3[] points = new Vector3[res];
+        
+        // Test if the portal is in main camera's frustum planes
+        if (!GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(Camera.main), portal.Bounds))
+            return false;
 
         // Calculate the points between a and b
         for (int i = 0; i < res; i++)
             points[i] = a + ((b - a) * ((Vector3.Distance(a, b) / res) * i));
 
+        
         // Cast rays from camera to the points
         foreach (Vector3 prPos in points)
         {
@@ -142,7 +129,6 @@ public class MainCameraController : MonoBehaviour
                     if (debugRay) Debug.DrawLine(transform.position, hit.point, Color.green, duration);
                     return true;
                 }
-                //Debug.Log(hit.collider.gameObject.name);
 
                 if (debugRay) Debug.DrawLine(transform.position, hit.point, Color.red, duration);
             }
@@ -168,6 +154,11 @@ public class MainCameraController : MonoBehaviour
         planes[3] = new Plane(camPos, topLeft,    topRight);    // Top
         planes[4] = camPlanes[4];                               // Near
         planes[5] = camPlanes[5];                               // Far
+        
+        Debug.DrawLine(camPos, topLeft, Color.yellow);
+        Debug.DrawLine(camPos, topRight, Color.yellow);
+        Debug.DrawLine(camPos, bottomLeft, Color.yellow);
+        Debug.DrawLine(camPos, bottomRight, Color.yellow);
 
         return planes;
     }
