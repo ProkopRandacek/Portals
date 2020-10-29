@@ -15,13 +15,16 @@ public class Portal : MonoBehaviour
     public Vector3      offset; // Vector pointing from this portal to the otherPortal. Not used rn
     public Vector3[]    corners; // The 4 corners of this portal's screen. Used to calculate planes that align with camera and these corners
                                  // to get view frustum and test whether a portal is visible from a camera trough this portal (See MainCameraController.cs' GetPlanes() method)
-                                 
+
     // Self explanatory variables IMO
     private Transform             _playerPos;
     private Transform             _otherPortalPos;
     private GameObject            _otherPortalScreen; 
     private RenderTexture         _viewTexture;
     private List<PortalTraveller> _trackedTravellers; // Travellers that are near any portal
+
+    public float something = 0.05f; // Dont know
+    public float someotherthing = 0.05f; // Dont know neither
 
     private static readonly int MainTex = Shader.PropertyToID("_MainTex");
     
@@ -160,8 +163,8 @@ public class Portal : MonoBehaviour
         int dot = Math.Sign(Vector3.Dot(clipPlane.forward, otherPortal.transform.position - myCam.transform.position));
         Vector3 camSpacePos    = myCam.worldToCameraMatrix.MultiplyPoint(clipPlane.position);
         Vector3 camSpaceNormal = myCam.worldToCameraMatrix.MultiplyVector(clipPlane.forward) * dot;
-        float   camSpaceDst    = -Vector3.Dot(camSpacePos, camSpaceNormal) + 0.00f;
-        if (Mathf.Abs(camSpaceDst) > 0.00f)
+        float   camSpaceDst    = -Vector3.Dot(camSpacePos, camSpaceNormal) + something;
+        if (Mathf.Abs(camSpaceDst) > someotherthing)
         {
             Vector4 clipPlaneCameraSpace = new Vector4(camSpaceNormal.x, camSpaceNormal.y, camSpaceNormal.z, camSpaceDst);
             myCam.projectionMatrix = myCam.CalculateObliqueMatrix(clipPlaneCameraSpace);
