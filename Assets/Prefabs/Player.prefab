@@ -91,7 +91,7 @@ MonoBehaviour:
   debugRay: 0
   duration: 0.05
   res: 20
-  renderDistance: 3
+  renderDistance: 30
 --- !u!114 &1523203393617226123
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -84,7 +84,7 @@ public class MainCameraController : MonoBehaviour
                     Physics.Raycast(p, direction, out RaycastHit hit2, renderDistance);
                     if (hit2.collider.gameObject == raycastingPortal.screen.gameObject)
                     {
-                        if (debugRay) Debug.DrawLine(p, hit2.point, Color.yellow, duration);
+                        //if (debugRay) Debug.DrawLine(p, hit2.point, Color.yellow, duration);
                         portals2.Add((possiblePortal, portal.offset));
                         break;
                     }
